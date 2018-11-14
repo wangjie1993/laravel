@@ -11,10 +11,9 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
-Route::get('/daa/index','Daa\IndexControllers@index')->name('daa.index');
-Route::get('/admin/add','Admin\ArticleController@add')->name('admin.add');
-Route::get('/admin/index','Admin\IntexController@index')->name('admin.index');
-Route::resource('/admin/photo','Admin\PhotoController');
+Route::get('/','HomeController@index')->name('index');
+Route::get('/user/register','UserController@register')->name('register');
+Route::get('/user/login','UserController@login')->name('login');
+Route::post('/user/register','UserController@store')->name('store');
+
+Route::any('/code/send','Util\CodeController@send')->name('code.send');
