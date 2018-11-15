@@ -11,9 +11,22 @@
 |
 */
 
-Route::get('/','HomeController@index')->name('index');
+Route::get('/','Home\HomeController@index')->name('index');
 Route::get('/user/register','UserController@register')->name('register');
-Route::get('/user/login','UserController@login')->name('login');
 Route::post('/user/register','UserController@store')->name('store');
+Route::get('/user/login','UserController@login')->name('login');
+Route::post('user/login','UserController@loginForm')->name('login');
+Route::get('user/logout','UserController@logout')->name('logout');
+Route::get('user/password_reset','UserController@passwordReset')->name('password_reset');
+Route::post('user/password_reset','UserController@passwordResetForm')->name('password_reset');
+
 
 Route::any('/code/send','Util\CodeController@send')->name('code.send');
+
+
+
+//Route::get('admin/index','Admin\IndexController@index')->name('admin.index');
+//后台路由
+Route::group(['middleware' => ['admin.auth'],'prefix'=>'admin','namespace'=>'Admin','as'=>'admin.'],function(){
+    Route::get('index','IndexController@index')->name('index');
+});

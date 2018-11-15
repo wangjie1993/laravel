@@ -28,25 +28,14 @@
 
             <!-- Heading -->
             <h1 class="display-4 text-center mb-3">
-                注册
+               修改密码
             </h1>
 
             <!-- Subheading -->
-            <p class="text-muted text-center mb-5">
-                欢迎来到注册页面
-            </p>
 
             <!-- Form -->
-            <form method="post" action="{{route('register')}}">
+            <form method="post" action="{{route('password_reset')}}">
                 @csrf
-                <div class="form-group">
-                    <!-- Label -->
-                    <label>
-                        昵称
-                    </label>
-                    <!-- Input -->
-                    <input type="text" name="name" value="{{old('name')}}" class="form-control" placeholder="请输入个性昵称">
-                </div>
                 <div class="form-group">
                     <!-- Label -->
                     <label>
@@ -58,7 +47,7 @@
                 <div class="form-group">
                     <!-- Label -->
                     <label>
-                        密码
+                        新密码
                     </label>
                     <!-- Input -->
                     <input type="password" name="password" class="form-control" placeholder="请输入密码">
@@ -87,13 +76,13 @@
 
                 <!-- Submit -->
                 <button class="btn btn-lg btn-block btn-primary mb-3">
-                    注册
+                   确定
                 </button>
 
                 <!-- Link -->
                 <div class="text-center">
                     <small class="text-muted text-center">
-                        已有账号 ? <a href="{{route('login')}}">去登录</a>.
+                       <a href="{{route('login')}}">去登录</a>.
                     </small>
                 </div>
 
@@ -126,13 +115,13 @@
             url: '{{route('code.send')}}',
             //验证码等待发送时间
             timeout: 10,
-        //表单，手机号或邮箱的INPUT表单
-        input: '[name="email"]',
+            //表单，手机号或邮箱的INPUT表单
+            input: '[name="email"]',
             //发送前执行的动作，返回true时将发送（可不设置）
             before: function () {
-            return true;
+                return true;
+            }
         }
-    }
         hdjs.validCode(option);
     })
 </script>
