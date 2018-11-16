@@ -535,9 +535,9 @@
                 <!-- Menu -->
                 <div class="dropdown-menu dropdown-menu-right">
                 <a href="profile-posts.html" class="dropdown-item">{{auth()->user()->name}}</a>
-                    @if(auth()->user()->is_admin==1)
+                    @can('view',auth()->user())
                 <a href="{{route('admin.index')}}" class="dropdown-item">后台管理</a>
-                    @endif
+                    @endcan
                 <hr class="dropdown-divider">
                 <a href="{{route('logout')}}" class="dropdown-item">退出登录</a>
                 </div>
@@ -546,6 +546,7 @@
                 <a href="{{route('register')}}" class="btn btn-white btn-sm">注册</a>
                     @endauth
             </div>
+
 
         </div>
 
