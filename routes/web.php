@@ -10,8 +10,13 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
-
+//首页
 Route::get('/','Home\HomeController@index')->name('index');
+//前台
+Route::group(['prefix'=>'home','namespace'=>'Home','as'=>'home.'],function (){
+    Route::resource('article','ArticleController');
+});
+
 Route::get('/user/register','UserController@register')->name('register');
 Route::post('/user/register','UserController@store')->name('store');
 Route::get('/user/login','UserController@login')->name('login');
@@ -29,7 +34,7 @@ Route::any('/code/send','Util\CodeController@send')->name('code.send');
 //后台路由
 Route::group(['middleware' => ['admin.auth'],'prefix'=>'admin','namespace'=>'Admin','as'=>'admin.'],function(){
     Route::get('index','IndexController@index')->name('index');
-Route::resource('category','CategoryController');
+    Route::resource('category','CategoryController');
 });
 
 

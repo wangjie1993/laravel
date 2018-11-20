@@ -1107,7 +1107,7 @@
                         <a href="profile-posts.html" class="dropdown-item">Profile</a>
                         <a href="settings.html" class="dropdown-item">Settings</a>
                         <hr class="dropdown-divider">
-                        <a href="sign-in.html" class="">退出登录</a>
+                        <a href="{{route('logout')}}" class="">退出登录</a>
                     </div>
 
                 </div>
