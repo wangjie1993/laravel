@@ -14,14 +14,16 @@ class CreateArticlesTable extends Migration
     public function up()
     {
         Schema::create('articles', function (Blueprint $table) {
+            $table->engine = 'InnoDB';
             $table->increments('id');
             $table->string('title')->default('')->comment('文章标题');
-            $table->unsignedTinyInteger('user_id')->index()->default(0)->comment('作者');
+            $table->unsignedInteger('user_id')->index()->default(0)->comment('作者');
             //外键约束，数据库迁移->外键约束
             $table->foreign('user_id')
                 ->references('id')->on('users')
                 ->onDelete('cascade');
-            $table->unsignedTinyInteger('category_id')->index()->default(0)->comment('栏目ID');
+//            unsignedInteger:int类型
+            $table->unsignedInteger('category_id')->index()->default(0)->comment('栏目ID');
             $table->foreign('category_id')
                 ->references('id')->on('categories')
                 ->onDelete('cascade');

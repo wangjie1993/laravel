@@ -12,10 +12,10 @@
     <link rel="stylesheet" href="{{asset('org/Dashkit-1.1.2/dist/assets')}}/libs/quill/dist/quill.core.css">
     <link rel="stylesheet" href="{{asset('org/Dashkit-1.1.2/dist/assets')}}/libs/select2/dist/css/select2.min.css">
     <link rel="stylesheet" href="{{asset('org/Dashkit-1.1.2/dist/assets')}}/libs/flatpickr/dist/flatpickr.min.css">
-
+    <meta name="csrf-token" content="{{csrf_token()}}">
     <!-- Theme CSS -->
     <link rel="stylesheet" href="{{asset('org/Dashkit-1.1.2/dist/assets')}}/css/theme.min.css">
-
+    @stack('css')
     <title>Dashkit</title>
 </head>
 <body>
@@ -246,11 +246,9 @@
 
                 <!-- Toggle -->
                 <a href="#" class="text-muted" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-              <span class="icon active">
-                <i class="fe fe-bell"></i>
-              </span>
+
                 </a>
-                <a href="{{route('home.article.index')}}">添加文章</a>
+                <a href="{{route('home.article.index')}}">文章列表</a>
 
                 <!-- Menu -->
                 <div class="dropdown-menu dropdown-menu-right dropdown-menu-card">
@@ -527,7 +525,7 @@
 
                     <!-- Menu -->
                     <div class="dropdown-menu dropdown-menu-right">
-                        <a href="profile-posts.html" class="dropdown-item">{{auth()->user()->name}}</a>
+                        <a href="{{route('member.user.show',auth()->user())}}" class="dropdown-item">{{auth()->user()->name}}</a>
                         @can('view',auth()->user())
                             <a href="{{route('admin.index')}}" class="dropdown-item">后台管理</a>
                         @endcan
@@ -554,7 +552,7 @@
             <!-- Navigation -->
             <ul class="navbar-nav mr-auto">
                 <li class="nav-item">
-                    <a class="nav-link" href="index.html">
+                    <a class="nav-link" href="{{route('index')}}">
                         首页
                     </a>
                 </li>

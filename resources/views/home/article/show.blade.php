@@ -39,6 +39,7 @@
                         </div>
                     </div>
                 </div>
+                @include('home.layouts.comment')
             </div>
             <div class="col-12 col-xl-3">
                 <div class="card">
@@ -57,8 +58,14 @@
                         </div>
                     </div>
                     <div class="card-footer text-muted">
-                        <a class="btn btn-white btn-block btn-xs" href="http://www.houdunren.com/member/follow/1">
-                            <i class="fa fa-plus" aria-hidden="true"></i> 关注 TA
+                        <a class="btn btn-white btn-block btn-xs" href="{{route('member.attention',$article->user)}}">
+
+                            @if($article->user->fans->contains(auth()->user()))
+                                <i class="fa fa-plus" aria-hidden="true"></i> 取消关注
+                            @else
+                                <i class="fa fa-plus" aria-hidden="true"></i> 关注 TA
+                            @endif
+
                         </a>
                     </div>
                 </div>

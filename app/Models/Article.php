@@ -13,6 +13,6 @@ class Article extends Model
     }
     //定义栏目关联
     public  function category(){
-        return$this->belongsTo(Category::class);
+        return $this->belongsTo(Category::class);
     }
 }

@@ -14,7 +14,23 @@
 Route::get('/','Home\HomeController@index')->name('index');
 //前台
 Route::group(['prefix'=>'home','namespace'=>'Home','as'=>'home.'],function (){
+   //文章管理
     Route::resource('article','ArticleController');
+    //评论
+    Route::resource('comment','CommentController');
+});
+
+
+//会员中心
+Route::group(['prefix'=>'member','namespace'=>'Member','as'=>'member.'],function (){
+    //用户管理
+    Route::resource('user','UserController');
+    //定义关注与取消关注
+    Route::get('attention/{user}','UserController@attention')->name('attention');
+    //粉丝列表
+    //我的粉丝
+    Route::get('get_fans/{user}','UserController@myFans')->name('my_fans');
+    Route::get('get_following/{user}','UserController@myFollowing')->name('my_following');
 });
 
 Route::get('/user/register','UserController@register')->name('register');
@@ -25,8 +41,15 @@ Route::get('user/logout','UserController@logout')->name('logout');
 Route::get('user/password_reset','UserController@passwordReset')->name('password_reset');
 Route::post('user/password_reset','UserController@passwordResetForm')->name('password_reset');
 
+//工具类
+Route::group(['prefix'=>'util','namespace'=>'Util','as'=>'util.'],function(){
+    //发送验证码
+    Route::any('/code/send','CodeController@send')->name('code.send');
+    //上传
+    Route::any('/upload','UploadController@uploader')->name('upload');
+    Route::any('/filesLists','UploadController@filesLists')->name('filesLists');
+});
 
-Route::any('/code/send','Util\CodeController@send')->name('code.send');
 
 
 

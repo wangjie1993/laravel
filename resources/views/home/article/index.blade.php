@@ -26,17 +26,16 @@
 
                                         <!-- Toggle -->
                                         <a href="#!" class="small text-muted dropdown-toggle" data-toggle="dropdown">
-                                            Sort order
+                                            筛选
                                         </a>
 
                                         <!-- Menu -->
                                         <div class="dropdown-menu">
-                                            <a class="dropdown-item sort" data-sort="name" href="#!">
-                                                Asc
-                                            </a>
-                                            <a class="dropdown-item sort" data-sort="name" href="#!">
-                                                Desc
-                                            </a>
+                                            @foreach($categories as $category)
+                                                <a class="dropdown-item sort" data-sort="name" href="{{route('home.article.index',['category'=>$category['id']])}}">
+                                                    {{$category['title']}}
+                                                </a>
+                                            @endforeach
                                         </div>
 
                                     </div>
@@ -54,7 +53,6 @@
                         </div>
 
                         <div class="card-body">
-
                             <!-- List -->
                             <ul class="list-group list-group-lg list-group-flush list my--4">
                                 @foreach($articles as $article)
@@ -63,7 +61,7 @@
                                         <div class="row align-items-center">
                                             <div class="col-auto">
                                                 <!-- Avatar -->
-                                                <a href="" class="avatar avatar-sm">
+                                                <a href="{{route('member.user.show',$article->user)}}" class="avatar avatar-sm">
                                                     <img src="{{$article->user['icon']}}" alt="..." class="avatar-img rounded">
                                                 </a>
 
@@ -78,7 +76,7 @@
                                                 </h4>
 
                                                 <p class="card-text small mb-1">
-                                                    <a href="" class="text-secondary mr-2">
+                                                    <a href="{{route('member.user.show',$article->user)}}" class="text-secondary mr-2">
                                                         <i class="fa fa-user-circle" aria-hidden="true"></i>
                                                        {{$article->user['name']}}
                                                     </a>
@@ -127,8 +125,9 @@
 
                         </div>
                     </div>
-                    {{$articles->links()}}
-
+                   {{--自定义分页url--}}
+                    {{--手册：分页-->附加参数到分页链接--}}
+                    {{$articles->appends(['category'=>Request::query('category')])->links()}}
                 </div>
             </div>
         </div>
