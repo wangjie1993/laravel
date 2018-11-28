@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Member;
 
 use App\Models\Article;
+use App\Models\Zan;
 use App\User;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -113,4 +114,14 @@ public function __construct()
         $followings = $user->following()->paginate(3);
         return view('member.user.my_following',compact('user','followings'));
     }
+
+//    我的点赞
+        public function myZan(User $user,Request $request,Zan $zan){
+        $type = $request->query('type');
+        //通过用户查找该用户所有点赞数据
+            $data = [];
+            $zansData = $user->zan()->where('zan_type','App\Models\\'.ucfirst($type))->paginate(2);
+//            dd(1);
+            return view('member.user.my_zan_'.$type,compact('user','zans','zansData'));
+        }
 }

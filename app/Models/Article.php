@@ -15,4 +15,13 @@ class Article extends Model
     public  function category(){
         return $this->belongsTo(Category::class);
     }
+    //定义zan多态关联
+    public function zan(){
+        return $this->morphMany(Zan::class,'zan');
+    }
+
+    public function collect(){
+        return $this->morphMany(Collect::class,'collect');
+    }
+
 }

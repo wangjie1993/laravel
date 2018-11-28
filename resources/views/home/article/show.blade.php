@@ -6,8 +6,22 @@
                 <div class="card card-body p-5">
                     <div class="row">
                         <div class="col text-right">
-                            <a href="http://www.houdunren.com/common/favorite?model=EduTopic&amp;id=60" class="btn btn-xs">
-                                <i class="fa fa-heart-o" aria-hidden="true"></i> 收藏</a>
+                            <a href="" class="btn btn-xs">
+                                @auth
+                                    @if($article->collect->where('user_id',auth()->id())->first())
+                                        <a href="{{route('member.collect.make',['type'=>'article','id'=>$article['id']])}}" class="btn btn-sm btn-white">
+                                            取消收藏
+                                        </a>
+                                    @else
+                                        <a href="{{route('member.collect.make',['type'=>'article','id'=>$article['id']])}}" class="btn btn-sm btn-white">
+                                            收藏
+                                        </a>
+                                    @endif
+                                @else
+                                    <a href="{{route('login',['from'=>url()->full()])}}" class="btn btn-sm btn-white">
+                                        收藏
+                                    </a>
+                            @endauth
                         </div>
                     </div>
                     <div class="row">
@@ -37,6 +51,40 @@
                                 <textarea name="content" id="" hidden cols="30" rows="10"> {{$article->content}}</textarea>
                             </div>
                         </div>
+                    </div>
+                    {{--111--}}
+                    <div class="mb-3">
+                        <div class="row">
+                            <div class="col-auto mr--3">
+
+                                <div class="avatar-group d-none d-sm-flex">
+                                    @foreach($article->zan as $zan)
+                                    <a href="{{route('member.user.show',$zan->user)}}" class="avatar avatar-xs" data-toggle="tooltip" title="" data-original-title="Ab Hadley">
+                                        <img src="{{$zan->user->icon}}" alt="..." class="avatar-img rounded-circle border border-white">
+                                    </a>
+                                    @endforeach
+                                </div>
+
+                            </div>
+                            <div class="col-auto">
+                                @auth
+                                @if($article->zan->where('user_id',auth()->id())->first())
+                                <a href="{{route('home.zan.make',['type'=>'article','id'=>$article['id']])}}" class="btn btn-sm btn-white">
+                                    👍 取消
+                                </a>
+                                @else
+                                <a href="{{route('home.zan.make',['type'=>'article','id'=>$article['id']])}}" class="btn btn-sm btn-white">
+                                        👍 赞
+                                 </a>
+                                @endif
+                                @else
+                                        <a href="{{route('login',['from'=>url()->full()])}}" class="btn btn-sm btn-white">
+                                            👍 赞
+                                        </a>
+                                    @endauth
+
+                            </div>
+                        </div> <!-- / .row -->
                     </div>
                 </div>
                 @include('home.layouts.comment')

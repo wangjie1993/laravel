@@ -1,4 +1,4 @@
-<div class="col-sm-3">
+<div class="col-sm-3" id="left_menu">
     <div class="card">
         <div class="card-block text-center pt-5">
             <div class="avatar avatar-xxl">
@@ -47,19 +47,23 @@
                     @endcan
                 </a>
 
+                <a href="{{route('member.my_zan',[$user,'type'=>'article'])}}" class="nav-link text-muted {{active_class(if_route(['member.my_zan']), 'active', '')}}">
+                    @can('isMine',$user)
+                        我的点赞
+                    @else
+                        TA 的点赞
+                    @endcan
+                </a>
+
             </div>
         </div>
     </div>
     <div class="card">
         <div class="card-body text-center">
             <div class="nav flex-column nav-pills">
-                <a href="" class="nav-link
+                <a href="{{route('member.collect.index',[$user,'type'=>'article'])}}" class="nav-link
                                     text-muted">
-                    帖子管理
-                </a>
-                <a href="" class="nav-link
-                                    text-muted">
-                    文档管理
+                   我的收藏
                 </a>
                 <a href="" class="nav-link
                                     text-muted">
@@ -72,7 +76,7 @@
 
 @push('css')
     <style>
-        .active{
+       #left_menu .active{
             color: white!important;
         }
     </style>

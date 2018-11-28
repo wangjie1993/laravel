@@ -31,7 +31,8 @@
 
                                 <!-- Time -->
                                 <time class="comment-time">
-                                    👍 2 | @{{ v.created_at }}
+                                    <a href="" @click.prevent="zan(v)" > 👍 @{{v.zan_num}}</a>
+                                    @{{v.created_at}}
                                 </time>
 
                             </div>
@@ -78,7 +79,6 @@
     {{--@{{comment}}--}}
 </div>
 @push('js')
-    @auth
         <script>
             require(['hdjs', 'vue', 'axios', 'MarkdownIt', 'marked', 'highlight'], function (hdjs, Vue, axios, MarkdownIt, marked) {
                 var vm = new Vue({
@@ -87,8 +87,16 @@
                         comment: {content: ''},//当前评论数据
                         comments: [],//全部评论
                     },
+                    updated(){
+                        $(document).ready(function () {
+                            $('pre code').each(function (i, block) {
+                                hljs.highlightBlock(block);
+                            });
+                        });
+                    },
                     methods: {
                         //提交评论
+                        @auth
                         send() {
                             //评论不能为空
                             if (this.comment.content.trim() == '') {
@@ -108,23 +116,30 @@
                                 //将 markdown 转为 html
                                 let md = new MarkdownIt();
                                 response.data.comment.content = md.render(response.data.comment.content)
-                                $(document).ready(function () {
-                                    $('pre code').each(function (i, block) {
-                                        hljs.highlightBlock(block);
-                                    });
-                                });
                                 //清空 vue 数据
                                 this.comment.content = '';
                                 //清空编辑器内容
                                 //选中所有内容
-                                editormd.setSelection({line:0, ch:0}, {line:9999999, ch:9999999});
+                                editormd.setSelection({line:0, ch:0}, {line:8888888888, ch:88888888888});
                                 //将选中文本替换成空字符串
                                 editormd.replaceSelection("");
                             })
                         },
+
+
+                    //点赞
+                    zan(v){
+                      let url = '/home/zan/make?type=comment&id='+ v.id;
+                      axios.get(url).then((response)=>{
+                          v.zan_num = response.data.zan_num;
+                          //console.log(v);
+                      })
+                    }
+                    @endauth
                     },
                     mounted() {
                         //渲染编辑器
+                        @auth
                         hdjs.editormd("editormd", {
                             width: '100%',
                             height: 300,
@@ -141,31 +156,24 @@
                             server: '',
                             //editor.md库位置
                             path: "{{asset('org/hdjs')}}/package/editor.md/lib/",
-                            //监听编辑器变化
+                            //监听编辑变化
                             onchange: function () {
                                 //给 vu 对象中 comment 属性中 content 设置值
                                 vm.$set(vm.comment, 'content', this.getValue());
                             }
                         });
+                        @endauth
                         //请求当前文章所有评论数据
                         axios.get('{{route("home.comment.index",['article_id'=>$article['id']])}}')
                             .then((response) => {
-                                //console.log(response.data.comments)
                                 this.comments = response.data.comments;
                                 let md = new MarkdownIt();
-                                //console.log(this.comments);
                                 this.comments.forEach((v, k) => {
                                     v.content = md.render(v.content)
                                 })
-                                $(document).ready(function () {
-                                    $('pre code').each(function (i, block) {
-                                        hljs.highlightBlock(block);
-                                    });
-                                });
                             });
                     },
                 });
             })
         </script>
-    @endauth
 @endpush

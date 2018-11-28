@@ -18,6 +18,9 @@ Route::group(['prefix'=>'home','namespace'=>'Home','as'=>'home.'],function (){
     Route::resource('article','ArticleController');
     //评论
     Route::resource('comment','CommentController');
+    //点赞/取消
+    Route::get('zan/make','ZanController@make')->name('zan.make');
+
 });
 
 
@@ -31,6 +34,15 @@ Route::group(['prefix'=>'member','namespace'=>'Member','as'=>'member.'],function
     //我的粉丝
     Route::get('get_fans/{user}','UserController@myFans')->name('my_fans');
     Route::get('get_following/{user}','UserController@myFollowing')->name('my_following');
+//    我的收藏
+    //收藏
+    Route::get('collect/make','CollectController@make')->name('collect.make');
+    Route::get('collect/index/{user}','CollectController@index')->name('collect.index');
+//    我的点赞
+    Route::get('get_zan/{user}','UserController@myZan')->name('my_zan');
+//    我的通知
+    Route::get('notify/{user}','NotifyController@index')->name('notify');
+    Route::get('notify/show/{notify}','NotifyController@show')->name('notify.show');
 });
 
 Route::get('/user/register','UserController@register')->name('register');
